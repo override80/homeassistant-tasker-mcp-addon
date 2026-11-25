@@ -87,7 +87,7 @@ trap 'stop_bridge; adb kill-server >/dev/null 2>&1; exit 0' TERM INT
 start_bridge() {
   export TASKER_URL="$URL" TASKER_TOKEN TASKER_MCP_HOME=/data/mcp-home TASKER_WRITE_ALLOW="$WRITE_ALLOW"
   export TASKER_AUTO_PERSIST="$AUTO_PERSIST"
-  [ -n "$SERIAL" ] && export TASKER_ADB=/usr/bin/adb TASKER_ADB_SERIAL="$SERIAL"
+  [ -n "$SERIAL" ] && export TASKER_ADB=/usr/local/bin/adb TASKER_ADB_SERIAL="$SERIAL"
   export TASKER_MCP_DIR="$(npm root -g)/@pmaxhogan/tasker-mcp"
   export BRIDGE_LISTEN="$LISTEN" BRIDGE_PORT="$PORT" BRIDGE_ACCESS_TOKEN="$ACCESS_TOKEN"
   node /bridge.mjs &

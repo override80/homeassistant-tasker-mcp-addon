@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.3
+* Use Google's platform-tools adb on x86_64: Debian's adb 34 could not complete the Wireless debugging handshake with current Android ("failed to connect"), while the platform-tools build connects.
+
 ## 0.1.2
 * mDNS discovery now runs as a long-lived watcher (a one-shot scan rarely sees the phone's announcement); new `adb_endpoint` option; candidates are tried in order: option, watcher, last working endpoint.
 
