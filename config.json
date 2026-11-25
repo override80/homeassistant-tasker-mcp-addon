@@ -1,0 +1,36 @@
+{
+  "name": "Tasker MCP",
+  "version": "0.1.0",
+  "slug": "tasker_mcp",
+  "description": "MCP server for Tasker on an Android phone, reached over adb wireless debugging (or a tailnet), served as streamable HTTP on loopback with a bearer token",
+  "url": "https://github.com/override80/homeassistant-tasker-mcp-addon",
+  "arch": ["amd64", "aarch64"],
+  "startup": "services",
+  "boot": "auto",
+  "init": false,
+  "host_network": true,
+  "options": {
+    "access_token": "",
+    "tasker_token": "",
+    "phone_ip": "",
+    "tailnet_ip": "",
+    "port": 8765,
+    "listen": "127.0.0.1",
+    "write_allow": "TaskerMCP.",
+    "auto_persist": false,
+    "pair_endpoint": "",
+    "pair_code": ""
+  },
+  "schema": {
+    "access_token": "password",
+    "tasker_token": "password",
+    "phone_ip": "str?",
+    "tailnet_ip": "str?",
+    "port": "port",
+    "listen": "str",
+    "write_allow": "str",
+    "auto_persist": "bool",
+    "pair_endpoint": "str?",
+    "pair_code": "password?"
+  }
+}
