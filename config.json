@@ -1,6 +1,6 @@
 {
   "name": "Tasker MCP",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "slug": "tasker_mcp",
   "description": "MCP server for Tasker on an Android phone, reached over adb wireless debugging (or a tailnet), served as streamable HTTP on loopback with a bearer token",
   "url": "https://github.com/override80/homeassistant-tasker-mcp-addon",
