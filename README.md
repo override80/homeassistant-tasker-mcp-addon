@@ -25,6 +25,7 @@ container as *"Unsupported software"*. As an add-on it is a known image, starts 
 | `access_token` | **Required**, 16+ characters. Clients send it as `Authorization: Bearer …`. Make one with `openssl rand -hex 24`. |
 | `tasker_token` | **Required.** The bearer token of the HTTP server in Tasker on the phone. |
 | `phone_ip` | The phone's LAN address, to pick it out of the mDNS announcements. |
+| `adb_endpoint` | Optional fixed Wireless debugging `ip:port` to try first (the port changes every time Wireless debugging is toggled; the add-on also watches mDNS and remembers the last endpoint that worked). |
 | `tailnet_ip` | Optional fallback: the phone's Tailscale address (only works while the phone allows remote sessions). |
 | `port`, `listen` | Where the MCP endpoint listens (default `127.0.0.1:8765`). Keep it on loopback unless you know why not. |
 | `write_allow` | Comma separated name prefixes the mutating tools may touch (default `TaskerMCP.`). Add the names of tasks you want it to edit. |

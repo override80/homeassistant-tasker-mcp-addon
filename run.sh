@@ -19,6 +19,7 @@ ACCESS_TOKEN=$(opt access_token)
 TASKER_TOKEN=$(opt tasker_token)
 WRITE_ALLOW=$(opt write_allow)
 AUTO_PERSIST=$(opt auto_persist)
+ADB_ENDPOINT=$(opt adb_endpoint)
 PAIR_ENDPOINT=$(opt pair_endpoint)
 PAIR_CODE=$(opt pair_code)
 
@@ -33,6 +34,10 @@ fi
 
 adb start-server >/dev/null 2>&1
 
+# keeps /data/mdns_endpoint current while the phone announces Wireless debugging
+rm -f /data/mdns_endpoint
+python3 /discover.py "$PHONE_IP" /data/mdns_endpoint >/dev/null 2>&1 &
+
 # one-time pairing with a Wireless debugging pairing code (Developer options > Wireless debugging > Pair device)
 if [ -n "$PAIR_ENDPOINT" ] && [ -n "$PAIR_CODE" ]; then
   echo "adb pair $PAIR_ENDPOINT ..."
@@ -44,21 +49,21 @@ URL=""; SERIAL=""; ROUTE=""
 
 setup_route() {
   URL=""; SERIAL=""; ROUTE=""
-  local ep="" out
-  if [ -n "$PHONE_IP" ]; then
-    ep=$(timeout 20 python3 /discover.py "$PHONE_IP" 8 2>/dev/null)
-    [ -z "$ep" ] && [ -s /data/last_endpoint ] && ep=$(cat /data/last_endpoint)
-  fi
-  if [ -n "$ep" ]; then
+  local ep out cands=""
+  # candidates, best first: the fixed option, what the mDNS watcher last saw, the last endpoint that worked
+  [ -n "$ADB_ENDPOINT" ] && cands="$ADB_ENDPOINT"
+  [ -s /data/mdns_endpoint ] && cands="$cands $(cat /data/mdns_endpoint)"
+  [ -s /data/last_endpoint ] && cands="$cands $(cat /data/last_endpoint)"
+  for ep in $cands; do
     out=$(timeout 10 adb connect "$ep" 2>&1)
     case "$out" in
       *"connected to"*|*"already connected"*)
-        echo "$ep" > /data/last_endpoint
         if adb -s "$ep" forward "tcp:$FWD_PORT" "tcp:1822" >/dev/null 2>&1; then
+          echo "$ep" > /data/last_endpoint
           URL="http://127.0.0.1:$FWD_PORT"; SERIAL="$ep"; ROUTE="adb ($ep)"; return 0
         fi ;;
     esac
-  fi
+  done
   if [ -n "$TAILNET_IP" ]; then
     local code
     code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 6 "http://$TAILNET_IP:1822/ping" 2>/dev/null || true)
