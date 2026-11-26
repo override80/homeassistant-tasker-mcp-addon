@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Serves tasker-mcp (stdio-only upstream) as MCP streamable HTTP, with a bearer token, on one address.
 // It reuses the package's own server/tool code, so tools, write allow list and snapshots behave exactly as over stdio.
 import http from "node:http";

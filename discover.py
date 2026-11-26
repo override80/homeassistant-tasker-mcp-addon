@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
 """Keep watching mDNS for the phone's Wireless debugging endpoint (_adb-tls-connect._tcp) and keep the
 current "ip:port" in a file (removed again when the phone withdraws it).
 

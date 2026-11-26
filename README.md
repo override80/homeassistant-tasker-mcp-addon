@@ -28,7 +28,7 @@ container as *"Unsupported software"*. As an add-on it is a known image, starts 
 | `adb_endpoint` | Optional fixed Wireless debugging `ip:port` to try first (the port changes every time Wireless debugging is toggled; the add-on also watches mDNS and remembers the last endpoint that worked). |
 | `tailnet_ip` | Optional fallback: the phone's Tailscale address (only works while the phone allows remote sessions). |
 | `port`, `listen` | Where the MCP endpoint listens (default `127.0.0.1:8765`). Keep it on loopback unless you know why not. |
-| `write_allow` | Comma separated name prefixes the mutating tools may touch (default `TaskerMCP.`). Add the names of tasks you want it to edit. |
+| `write_allow` | Comma separated name prefixes the mutating tools may touch (default `TaskerMCP.`). Add the names of tasks you want it to edit. **Empty means no limit** (and then whole-configuration imports are allowed too: rename, delete, profile edits, restore). Only do that for a client you trust; every change still saves a snapshot first. |
 | `auto_persist` | Save Tasker's configuration after every change (drives Tasker's editor over adb; the phone must be awake). |
 | `pair_endpoint`, `pair_code` | One-time adb pairing (see below); clear them afterwards. |
 
@@ -58,6 +58,20 @@ The endpoint can change Tasker on your phone, so treat `access_token` like a pas
 on the Home Assistant host (or a client that can reach that port) is needed to use it. The allow list limits what can be modified;
 widen it deliberately.
 
-## License
+## Skill for AI agents
 
-MIT. `tasker-mcp` is by Max Hogan, also MIT.
+[`skills/tasker/SKILL.md`](skills/tasker/SKILL.md) is a Claude Code skill (it also works as plain instructions for other agents) that
+teaches an agent how to use this server safely: ground rules, the quirks found on a real phone and how to debug Tasker.
+Copy the `skills/tasker` folder to `~/.claude/skills/` or to your project's `.claude/skills/`.
+
+## License and community
+
+This project is **free for everyone** and always will be: MIT licensed, no paid tiers, no accounts, no telemetry. Use it, fork it,
+change it, redistribute it, even commercially, as long as the licence notice stays. It is maintained by the community; issues and
+pull requests are welcome (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+
+* This add-on, its skill and its documentation: MIT, see [LICENSE](LICENSE).
+* [`tasker-mcp`](https://github.com/pmaxhogan/tasker-mcp) by Max Hogan, the server this wraps, is also MIT.
+* Every other component of the image, with its licence: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Not affiliated with Tasker (joaoapps), Home Assistant or Google.

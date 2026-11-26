@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 ARG BUILD_FROM=node:26-slim
 FROM $BUILD_FROM
 

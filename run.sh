@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
 # Tasker MCP add-on: reach the phone (adb wireless debugging first, tailnet second), then serve tasker-mcp over HTTP.
 set -u
 
